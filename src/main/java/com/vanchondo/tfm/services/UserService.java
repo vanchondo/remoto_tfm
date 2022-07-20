@@ -1,8 +1,12 @@
 package com.vanchondo.tfm.services;
 
+import com.vanchondo.tfm.dtos.users.DeleteUserDTO;
 import com.vanchondo.tfm.dtos.users.SaveUserDTO;
+import com.vanchondo.tfm.dtos.users.UpdateUserDTO;
 import com.vanchondo.tfm.dtos.users.UserDTO;
 import com.vanchondo.tfm.entities.UserEntity;
+import com.vanchondo.tfm.exceptions.ConflictException;
+import com.vanchondo.tfm.exceptions.NotFoundException;
 import com.vanchondo.tfm.mappers.UserDTOMapper;
 import com.vanchondo.tfm.mappers.UserEntityMapper;
 import com.vanchondo.tfm.repositories.UserRepository;
@@ -22,14 +26,52 @@ public class UserService {
     }
 
     public UserDTO saveUser(SaveUserDTO dto){
-        UserEntity entity = UserEntityMapper.map(dto);
-        entity.setActive(false);
-        entity.setDeleted(false);
-        entity.setLastUpdatedAt(LocalDateTime.now());
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        // TODO checar que el email se unico
+        if (userRepository.findByEmail(dto.getEmail()) == null) {
+            UserEntity entity = UserEntityMapper.map(dto);
+            entity.setActive(false);
+            entity.setLastUpdatedAt(LocalDateTime.now());
+            entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 
-        entity = userRepository.save(entity);
-        return UserDTOMapper.map(entity);
+            entity = userRepository.save(entity);
+            return UserDTOMapper.map(entity);
+        }
+        else {
+            throw new ConflictException("Email is already registered");
+        }
+    }
+
+    public UserDTO updateUser(UpdateUserDTO dto){
+        UserEntity entity = userRepository.findByUsername(dto.getUsername());
+        if (entity == null) {
+            throw new NotFoundException("User not found");
+        }
+        else {
+            if (passwordEncoder.matches(dto.getCurrentPassword(), entity.getPassword())){
+                entity.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+                entity.setLastUpdatedAt(LocalDateTime.now());
+
+                entity = userRepository.save(entity);
+                return UserDTOMapper.map(entity);
+            }
+            else {
+                throw new ConflictException("Password is not valid");
+            }
+        }
+    }
+
+    public boolean deleteUser(DeleteUserDTO dto){
+        UserEntity entity = userRepository.findByUsername(dto.getUsername());
+        if (entity == null) {
+            throw new NotFoundException("User not found");
+        }
+        else {
+            if (passwordEncoder.matches(dto.getPassword(), entity.getPassword())){
+                userRepository.delete(entity);
+                return true;
+            }
+            else {
+                throw new ConflictException("Password is not valid");
+            }
+        }
     }
 }
