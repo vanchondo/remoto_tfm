@@ -3,3 +3,27 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: tfm
+
+
+  security:
+    user:
+      password: password
+      name: user
+
+com:
+  vanchondo:
+    login:
+      secretKey: 6bf44b7beb7302d53e3920e6a927e91ad6dea62da750084300ac5f40c7aa5f79
+      issuer: tfm-app
+      # Minutes
+      expirationToken: 1440
+
+      unsecuredUrls:
+        - url: /login
+          methods: POST
+        - url: /register
+          methods: POST
+        - url: /validate
+          methods: GET
+        - url: /swagger-ui
+          methods: GET

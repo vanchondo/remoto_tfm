@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +43,14 @@ public class ControllerException {
         List<String> errorMessages = Collections.singletonList(ex.getLocalizedMessage());
 
         return buildResponseError(errorMessages, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorDTO> exception(AuthenticationException ex){
+        logger.error(ex);
+        List<String> errorMessages = Collections.singletonList(ex.getLocalizedMessage());
+
+        return buildResponseError(errorMessages, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

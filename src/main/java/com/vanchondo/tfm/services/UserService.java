@@ -28,7 +28,8 @@ public class UserService {
     public UserDTO saveUser(SaveUserDTO dto){
         if (userRepository.findByEmail(dto.getEmail()) == null) {
             UserEntity entity = UserEntityMapper.map(dto);
-            entity.setActive(false);
+            // TODO send email to validate it
+            entity.setActive(true);
             entity.setLastUpdatedAt(LocalDateTime.now());
             entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 
@@ -73,5 +74,18 @@ public class UserService {
                 throw new ConflictException("Password is not valid");
             }
         }
+    }
+
+    public UserDTO findUserByUsername(String username) {
+        return UserDTOMapper.map(findUserEntityByUsername(username));
+    }
+
+    public UserEntity findUserEntityByUsername(String username) {
+        UserEntity entity = userRepository.findByUsername(username);
+        if (entity == null) {
+            throw new NotFoundException("User not found");
+        }
+
+        return entity;
     }
 }

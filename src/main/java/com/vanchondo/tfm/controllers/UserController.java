@@ -1,7 +1,6 @@
 package com.vanchondo.tfm.controllers;
 
 import com.vanchondo.tfm.dtos.users.DeleteUserDTO;
-import com.vanchondo.tfm.dtos.users.SaveUserDTO;
 import com.vanchondo.tfm.dtos.users.UpdateUserDTO;
 import com.vanchondo.tfm.dtos.users.UserDTO;
 import com.vanchondo.tfm.services.UserService;
@@ -19,12 +18,6 @@ public class UserController {
 
     public UserController(UserService userService){
         this.userService = userService;
-    }
-
-    @PostMapping(value = "")
-    public ResponseEntity<UserDTO> saveUser(@Valid @RequestBody SaveUserDTO user){
-        UserDTO dto = userService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @PutMapping(value = "")
