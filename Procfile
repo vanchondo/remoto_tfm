@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=dev -Djasypt.encryptor.password=$JASYPT_SECRET_KEY -Dserver.port=80 -jar build/libs/remoto-1.0-SNAPSHOT.jar
+    web: java -Dspring.profiles.active=dev -Djasypt.encryptor.password=$JASYPT_SECRET_KEY -Dserver.port=$PORT -jar build/libs/remoto-1.0-SNAPSHOT.jar
