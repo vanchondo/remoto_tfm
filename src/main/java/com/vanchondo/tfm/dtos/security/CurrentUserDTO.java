@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Getter
@@ -15,7 +14,6 @@ public class CurrentUserDTO {
     private String username;
     private String email;
     private String role;
-    private List<String> authorities;
     private Date iat;
     private Date exp;
 }

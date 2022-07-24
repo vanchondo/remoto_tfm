@@ -81,19 +81,15 @@ public class AuthenticationService {
                 .setIssuedAt(new Date())
                 .setExpiration(cal.getTime())
                 .signWith(
-                        getSigningKey(),
+                        getSigningKey(loginConfiguration.getSecretKey()),
                         SignatureAlgorithm.HS256
                 )
                 .compact());
     }
 
-    private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(loginConfiguration.getSecretKey());
+    public static Key getSigningKey(String secretKey) {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
-//    public static List<String> getListOfAuthorities(List<Authority> authorities) {
-//        return authorities.stream().map(Authority::getAuthority).collect(Collectors.toList());
-//    }
 }
 

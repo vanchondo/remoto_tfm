@@ -4,9 +4,7 @@ import com.vanchondo.tfm.dtos.security.CurrentUserDTO;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public class CurrentUserDTOMapper {
@@ -39,10 +37,6 @@ public class CurrentUserDTOMapper {
                     cu.setRole(Optional.ofNullable(claim.get("role"))
                             .map(String::valueOf)
                             .orElse(StringUtils.EMPTY));
-
-                    cu.setAuthorities(Optional.of(claim)
-                            .map(c->(List<String>)c.get("authorities"))
-                            .orElse(Collections.emptyList()));
 
                     return cu;
                 })

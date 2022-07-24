@@ -3,11 +3,12 @@ package com.vanchondo.tfm.filters;
 import com.vanchondo.tfm.configs.properties.LoginConfiguration;
 import com.vanchondo.tfm.dtos.security.CurrentUserDTO;
 import com.vanchondo.tfm.mappers.CurrentUserDTOMapper;
+import com.vanchondo.tfm.services.AuthenticationService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -22,7 +23,6 @@ import java.io.IOException;
 public class JwtFilter extends GenericFilterBean {
 
     private final LoginConfiguration loginConfiguration;
-    private final String INVALID_TOKEN_MESSAGE = "Invalid Authorization Token";
 
     public JwtFilter(LoginConfiguration loginConfiguration){
         this.loginConfiguration = loginConfiguration;
@@ -33,6 +33,8 @@ public class JwtFilter extends GenericFilterBean {
             throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
+
+        String invalidTokenMessage = "Invalid Authorization Token";
         if (isUnsecuredUrl(request.getRequestURI(), request.getMethod())) {
             chain.doFilter(request, response);
         } else if ("OPTIONS".equals(request.getMethod())) {
@@ -45,20 +47,25 @@ public class JwtFilter extends GenericFilterBean {
             if (StringUtils.isEmpty(authParam) && (authHeader == null || !authHeader
                     .startsWith("Bearer "))) {
 
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), INVALID_TOKEN_MESSAGE);
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), invalidTokenMessage);
                 return;
             }
             String token = StringUtils.isEmpty(authHeader) ? authParam : authHeader.substring(7);
 
             try {
-                final Claims claims = Jwts.parser().setSigningKey(loginConfiguration.getSecretKey()).parseClaimsJws(token)
+
+                final Claims claims = Jwts.parserBuilder()
+                        .setSigningKey(
+                                AuthenticationService.getSigningKey(loginConfiguration.getSecretKey())
+                        ).build()
+                        .parseClaimsJws(token)
                         .getBody();
                 CurrentUserDTO currentUser = CurrentUserDTOMapper.map(claims);
                 request.setAttribute("currentUser", currentUser);
 //                response.addHeader("Access-Control-Expose-Headers", "Authorization");
 //                response.addHeader("Authorization", usersService.generateToken(currentUser).getToken());
             } catch (Exception e) {
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), INVALID_TOKEN_MESSAGE);
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), invalidTokenMessage);
                 return;
             }
 
