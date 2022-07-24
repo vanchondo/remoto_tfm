@@ -1,5 +1,6 @@
 package com.vanchondo.tfm.controllers;
 
+import com.vanchondo.tfm.dtos.security.CurrentUserDTO;
 import com.vanchondo.tfm.dtos.users.DeleteUserDTO;
 import com.vanchondo.tfm.dtos.users.UpdateUserDTO;
 import com.vanchondo.tfm.dtos.users.UserDTO;
@@ -21,13 +22,13 @@ public class UserController {
     }
 
     @PutMapping(value = "")
-    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UpdateUserDTO user){
-        UserDTO dto = userService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dto);
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UpdateUserDTO user, @RequestAttribute("currentUser") CurrentUserDTO currentUser){
+        UserDTO dto = userService.updateUser(user, currentUser);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     @DeleteMapping(value = "")
-    public void deleteUSer(@Valid @RequestBody DeleteUserDTO user){
-        userService.deleteUser(user);
+    public void deleteUSer(@Valid @RequestBody DeleteUserDTO user, @RequestAttribute("currentUser") CurrentUserDTO currentUser){
+        userService.deleteUser(user, currentUser);
     }
 }

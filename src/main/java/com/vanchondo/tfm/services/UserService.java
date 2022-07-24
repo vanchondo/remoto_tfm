@@ -1,5 +1,6 @@
 package com.vanchondo.tfm.services;
 
+import com.vanchondo.tfm.dtos.security.CurrentUserDTO;
 import com.vanchondo.tfm.dtos.users.DeleteUserDTO;
 import com.vanchondo.tfm.dtos.users.SaveUserDTO;
 import com.vanchondo.tfm.dtos.users.UpdateUserDTO;
@@ -41,8 +42,8 @@ public class UserService {
         }
     }
 
-    public UserDTO updateUser(UpdateUserDTO dto){
-        UserEntity entity = userRepository.findByUsername(dto.getUsername());
+    public UserDTO updateUser(UpdateUserDTO dto, CurrentUserDTO currentUser){
+        UserEntity entity = userRepository.findByUsername(currentUser.getUsername());
         if (entity == null) {
             throw new NotFoundException("User not found");
         }
@@ -60,8 +61,8 @@ public class UserService {
         }
     }
 
-    public boolean deleteUser(DeleteUserDTO dto){
-        UserEntity entity = userRepository.findByUsername(dto.getUsername());
+    public boolean deleteUser(DeleteUserDTO dto, CurrentUserDTO currentUser){
+        UserEntity entity = userRepository.findByUsername(currentUser.getUsername());
         if (entity == null) {
             throw new NotFoundException("User not found");
         }
