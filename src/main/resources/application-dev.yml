@@ -1,0 +1,12 @@
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${spring.data.mongodb.username}:${spring.data.mongodb.password}@cluster0.xyagrwi.mongodb.net/?retryWrites=true&w=majority
+      database: tfm
+      username: mongo_user
+      password: ENC(FurzDJnIQj+2f1P3mGyscq300lFDHuLY/rJn5eQVGpM=)

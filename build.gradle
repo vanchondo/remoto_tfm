@@ -1,5 +1,4 @@
 plugins {
-
     id 'org.springframework.boot' version '2.7.1'
     id 'java'
 }
@@ -20,7 +19,10 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBoot_version}"
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "${springBoot_version}"
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBoot_version}"
+
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.7.+'
+
+    implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
 
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: "${jsonwebtoken_version}"
     implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: "${jsonwebtoken_version}"
@@ -37,4 +39,9 @@ dependencies {
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombok_version}"
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombok_version}"
 
+}
+
+bootRun {
+    systemProperty "spring.profiles.active", findProperty("spring.profiles.active")
+    systemProperty("jasypt.encryptor.password", findProperty("jasypt.encryptor.password"))
 }
