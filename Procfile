@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=dev -Djasypt.encryptor.password=$JASYPT_SECRET_KEY -javaagent:/app/newrelic/newrelic.jar target/*.jar
+web: java -Dspring.profiles.active=dev -Djasypt.encryptor.password=$JASYPT_SECRET_KEY -jar target/*.jar
