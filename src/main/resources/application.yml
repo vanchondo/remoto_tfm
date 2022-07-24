@@ -2,7 +2,6 @@
 com:
   vanchondo:
     login:
-      secretKey: 6bf44b7beb7302d53e3920e6a927e91ad6dea62da750084300ac5f40c7aa5f79
       issuer: tfm-app
       # Minutes
       expirationToken: 1440

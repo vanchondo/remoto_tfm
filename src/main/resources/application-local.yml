@@ -3,3 +3,8 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: tfm
+
+com:
+  vanchondo:
+    login:
+      secretKey: 613f918b1473e1f1faec033e8f5085fa89eee67514a1de963c389919cecbf5ed
