@@ -1,1 +1,1 @@
-web: ./gradlew bootrun -Pspring.profiles.active=dev -Pjasypt.encryptor.password=$JASYPT_SECRET_KEY
+web: ./gradlew bootrun -Pspring.profiles.active=dev -Pjasypt.encryptor.password=$JASYPT_SECRET_KEY -P-javaagent:/app/newrelic/newrelic.jar
