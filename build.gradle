@@ -10,15 +10,21 @@ sourceCompatibility= '1.11'
 def lombok_version = '1.18.+'
 def springBoot_version = '2.7.+'
 def jsonwebtoken_version = '0.11.+'
+def swagger_version = '3.0.+'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: "${springBoot_version}", ext: 'pom'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "${springBoot_version}"
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: "${springBoot_version}"
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBoot_version}"
+
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: "${swagger_version}"
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swagger_version}"
+
 
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.7.+'
 

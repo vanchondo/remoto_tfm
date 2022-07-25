@@ -71,17 +71,23 @@ public class JwtFilter extends GenericFilterBean {
 
             chain.doFilter(req, res);
         }
-
     }
 
     private boolean isUnsecuredUrl(String path, String requestMethod) {
         String cleanedUrl = cleanUrl(path);
 
         return loginConfiguration.getUnsecuredUrls().stream()
-                .anyMatch(
-                        urlResource -> cleanedUrl.equals(urlResource.getUrl())
-                                && urlResource.getMethods().contains(requestMethod)
-                );
+                .anyMatch(urlResource -> {
+                    if (urlResource.getUrl().endsWith("*")){
+                        String url = urlResource.getUrl().substring(0, urlResource.getUrl().length()-1);
+                        return cleanedUrl.contains(url)
+                                && urlResource.getMethods().contains(requestMethod);
+                    }
+                    else {
+                        return cleanedUrl.equals(urlResource.getUrl())
+                                && urlResource.getMethods().contains(requestMethod);
+                    }
+                });
     }
 
     private String cleanUrl(String url) {

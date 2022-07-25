@@ -1,3 +1,7 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 com:
   vanchondo:
@@ -13,5 +17,7 @@ com:
           methods: POST
         - url: /validate
           methods: GET
-        - url: /swagger-ui
+        - url: /swagger*
+          methods: GET
+        - url: /v2/api-docs
           methods: GET
