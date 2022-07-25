@@ -15,7 +15,7 @@ com:
           methods: POST
         - url: /register
           methods: POST
-        - url: /validate
+        - url: /users/available
           methods: GET
         - url: /swagger*
           methods: GET

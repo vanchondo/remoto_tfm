@@ -11,6 +11,7 @@ import com.vanchondo.tfm.exceptions.NotFoundException;
 import com.vanchondo.tfm.mappers.UserDTOMapper;
 import com.vanchondo.tfm.mappers.UserEntityMapper;
 import com.vanchondo.tfm.repositories.UserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,20 @@ public class UserService {
         }
     }
 
+    public boolean available(String username, String email){
+        try {
+            if (!StringUtils.isEmpty(username)){
+                findUserByUsername(username);
+            }
+            else if (!StringUtils.isEmpty(email)) {
+                findByEmail(email);
+            }
+        } catch (NotFoundException ex){
+            return true;
+        }
+        return false;
+    }
+
     public UserDTO findUserByUsername(String username) {
         return UserDTOMapper.map(findUserEntityByUsername(username));
     }
@@ -88,5 +103,14 @@ public class UserService {
         }
 
         return entity;
+    }
+
+    public UserDTO findByEmail(String email) {
+        UserEntity entity = userRepository.findByEmail(email);
+        if (entity == null) {
+            throw new NotFoundException("User not found");
+        }
+
+        return UserDTOMapper.map(entity);
     }
 }

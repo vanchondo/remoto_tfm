@@ -28,7 +28,17 @@ public class UserController {
     }
 
     @DeleteMapping(value = "")
-    public void deleteUSer(@Valid @RequestBody DeleteUserDTO user, @RequestAttribute("currentUser") CurrentUserDTO currentUser){
+    public void deleteUser(@Valid @RequestBody DeleteUserDTO user, @RequestAttribute("currentUser") CurrentUserDTO currentUser){
         userService.deleteUser(user, currentUser);
+    }
+
+    @GetMapping(value="/available")
+    public ResponseEntity available(@RequestParam(value = "username", required = false) String username, @RequestParam(value="email", required = false) String email) {
+        if (userService.available(username, email)) {
+            return ResponseEntity.ok().build();
+        }
+        else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
