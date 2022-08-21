@@ -5,6 +5,11 @@ spring:
 
 com:
   vanchondo:
+    yahoo-finance:
+      url: https://query1.finance.yahoo.com/v7/finance/download/
+      btc:
+        path: BTC-USD
+        startDate: 10/15/2014
     login:
       issuer: tfm-app
       # Minutes
