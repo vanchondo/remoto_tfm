@@ -5,10 +5,24 @@ spring:
 
 com:
   vanchondo:
+    crypto-forecasting:
+      url: http://ec2-54-144-225-100.compute-1.amazonaws.com:5000/predict/
     yahoo-finance:
       url: https://query1.finance.yahoo.com/v7/finance/download/
       btc:
         path: BTC-USD
+        startDate: 10/15/2014
+      eth:
+        path: BTC-USD
+        startDate: 10/15/2014
+      ada:
+        path: ADA-USD
+        startDate: 10/15/2014
+      sol:
+        path: SOL-USD
+        startDate: 10/15/2014
+      xrp:
+        path: XRP-USD
         startDate: 10/15/2014
     login:
       issuer: tfm-app

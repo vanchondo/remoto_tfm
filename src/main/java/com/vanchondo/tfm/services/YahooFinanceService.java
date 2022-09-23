@@ -27,9 +27,34 @@ public class YahooFinanceService {
     }
 
     public List<CryptoDTO> downloadBTCHistory() throws IOException {
-        List<CryptoDTO> history = new ArrayList<>();
         StringBuilder urlString = new StringBuilder(configuration.getUrl() + configuration.getBtc().getPath());
-        String period1 = getEpoch(configuration.getBtc().getStartDate());
+        return downloadHistory(urlString, configuration.getBtc().getStartDate());
+    }
+
+    public List<CryptoDTO> downloadETHHistory() throws IOException {
+        StringBuilder urlString = new StringBuilder(configuration.getUrl() + configuration.getEth().getPath());
+        return downloadHistory(urlString, configuration.getEth().getStartDate());
+    }
+
+    public List<CryptoDTO> downloadADAHistory() throws IOException {
+        StringBuilder urlString = new StringBuilder(configuration.getUrl() + configuration.getAda().getPath());
+        return downloadHistory(urlString, configuration.getAda().getStartDate());
+    }
+
+    public List<CryptoDTO> downloadXRPHistory() throws IOException {
+        StringBuilder urlString = new StringBuilder(configuration.getUrl() + configuration.getXrp().getPath());
+        return downloadHistory(urlString, configuration.getXrp().getStartDate());
+    }
+
+    public List<CryptoDTO> downloadSOLHistory() throws IOException {
+        StringBuilder urlString = new StringBuilder(configuration.getUrl() + configuration.getSol().getPath());
+        return downloadHistory(urlString, configuration.getSol().getStartDate());
+    }
+
+    private List<CryptoDTO> downloadHistory(StringBuilder urlString, String startDate) throws IOException{
+        List<CryptoDTO> history = new ArrayList<>();
+
+        String period1 = getEpoch(startDate);
         String period2 = getYesterdayEpoch();
         urlString.append("?period1=" + period1);
         urlString.append("&period2=" + period2);
@@ -67,7 +92,6 @@ public class YahooFinanceService {
                 con.disconnect();
             }
         }
-
         return history;
     }
 

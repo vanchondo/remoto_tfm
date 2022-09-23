@@ -6,14 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "com.vanchondo.yahoo-finance")
+@ConfigurationProperties(prefix = "com.vanchondo.crypto-forecasting")
 @Getter
 @Setter
-public class YahooFinanceConfiguration {
+public class CryptoForecastingConfiguration {
     private String url;
-    private CryptoProperties btc;
-    private CryptoProperties eth;
-    private CryptoProperties ada;
-    private CryptoProperties xrp;
-    private CryptoProperties sol;
 }
