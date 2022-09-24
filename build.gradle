@@ -39,6 +39,8 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombok_version}"
     annotationProcessor group: 'org.projectlombok', name:'lombok', version: "${lombok_version}"
 
+    // RSS feed
+    implementation 'com.apptasticsoftware:rssreader:3.1.0'
 
     // Test libraries
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBoot_version}"

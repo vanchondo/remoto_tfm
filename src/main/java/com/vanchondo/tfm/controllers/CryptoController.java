@@ -1,9 +1,11 @@
 package com.vanchondo.tfm.controllers;
 
+import com.apptasticsoftware.rssreader.Item;
 import com.vanchondo.tfm.configs.properties.CryptoProperties;
 import com.vanchondo.tfm.dtos.CryptoDTO;
 import com.vanchondo.tfm.dtos.CryptoValuesDTO;
 import com.vanchondo.tfm.services.CryptoForecasting;
+import com.vanchondo.tfm.services.RSSClient;
 import com.vanchondo.tfm.services.YahooFinanceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,12 +24,19 @@ public class CryptoController {
 
     private final static Logger logger = LogManager.getLogger();
 
-    private YahooFinanceService yahooFinanceService;
+    private final YahooFinanceService yahooFinanceService;
     private final CryptoForecasting cryptoForecastingService;
+    private final RSSClient rssClient;
 
-    public CryptoController(YahooFinanceService yahooFinanceService, CryptoForecasting cryptoForecastingService){
+    public CryptoController(YahooFinanceService yahooFinanceService, CryptoForecasting cryptoForecastingService, RSSClient rssClient){
         this.yahooFinanceService = yahooFinanceService;
         this.cryptoForecastingService = cryptoForecastingService;
+        this.rssClient = rssClient;
+    }
+
+    @GetMapping(value="/news")
+    public ResponseEntity<List<Item>> cryptoNews() throws IOException {
+        return ResponseEntity.ok(rssClient.getRssItems());
     }
 
     @GetMapping(value="/history/btc")
