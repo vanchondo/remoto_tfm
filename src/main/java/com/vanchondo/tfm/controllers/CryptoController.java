@@ -4,6 +4,7 @@ import com.apptasticsoftware.rssreader.Item;
 import com.vanchondo.tfm.configs.properties.CryptoProperties;
 import com.vanchondo.tfm.dtos.CryptoDTO;
 import com.vanchondo.tfm.dtos.CryptoValuesDTO;
+import com.vanchondo.tfm.dtos.RssItem;
 import com.vanchondo.tfm.services.CryptoForecasting;
 import com.vanchondo.tfm.services.RSSClient;
 import com.vanchondo.tfm.services.YahooFinanceService;
@@ -35,7 +36,7 @@ public class CryptoController {
     }
 
     @GetMapping(value="/news")
-    public ResponseEntity<List<Item>> cryptoNews() throws IOException {
+    public ResponseEntity<List<RssItem>> cryptoNews() throws IOException {
         return ResponseEntity.ok(rssClient.getRssItems());
     }
 

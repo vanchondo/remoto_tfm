@@ -42,6 +42,10 @@ dependencies {
     // RSS feed
     implementation 'com.apptasticsoftware:rssreader:3.1.0'
 
+    // OWASP
+    implementation group: 'com.googlecode.owasp-java-html-sanitizer', name: 'owasp-java-html-sanitizer', version: '20220608.1'
+
+
     // Test libraries
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "${springBoot_version}"
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombok_version}"
