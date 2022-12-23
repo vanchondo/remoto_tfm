@@ -10,6 +10,7 @@ server:
     key-store-password: ENC(pyTWVDZrWrqFIwCL6UcliA==)
     key-alias: remoto-tfm
     enabled: true
+  port: 8443
 
 spring:
   data:
