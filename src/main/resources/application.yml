@@ -5,8 +5,6 @@ spring:
 
 com:
   vanchondo:
-    crypto-forecasting:
-      url: http://ec2-54-144-225-100.compute-1.amazonaws.com:5000/predict/
     yahoo-finance:
       url: https://query1.finance.yahoo.com/v7/finance/download/
       btc:
