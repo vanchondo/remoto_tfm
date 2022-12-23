@@ -3,6 +3,14 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/vanchondo.p12
+    key-store-password: ENC(pyTWVDZrWrqFIwCL6UcliA==)
+    key-alias: remoto-tfm
+    enabled: true
+
 spring:
   data:
     mongodb:
