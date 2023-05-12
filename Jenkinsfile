@@ -30,7 +30,7 @@ pipeline {
     post {
         always {
             sh 'docker logout'
-            sh 'docker image ${app_name}:${version} rm -f'
+            sh 'docker image rm -f ${app_name}:${version}'
         }
     }
 }
