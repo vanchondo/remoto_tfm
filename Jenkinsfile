@@ -26,11 +26,17 @@ pipeline {
                 }
             }
         } 
+        stage('Docker Run') {
+            steps {
+                sh 'docker run --rm --name ${app_name} -d --restart unless-stopped -p8443:8443 ${app_name}:${version}'
+            }
+        }
     }
     post {
         always {
             sh 'docker logout'
-            sh 'docker image rm -f ${app_name}:${version}'
+            // sh 'docker image rm -f ${app_name}:${version}'
+            sh 'docker system prune -af'
         }
     }
 }
