@@ -36,8 +36,7 @@ pipeline {
     post {
         always {
             sh 'docker logout'
-            // sh 'docker image rm -f ${app_name}:${version}'
-            sh 'docker system prune -af'
+            sh 'docker image rm -f ${app_name}:${version}'
         }
     }
 }
