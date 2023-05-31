@@ -23,7 +23,7 @@ com:
         path: XRP-USD
         startDate: 10/15/2014
     login:
-      issuer: tfm-app
+      issuer: sso-svc
       # Minutes
       expirationToken: 1440
 
